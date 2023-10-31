@@ -1,11 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { FiltersContext, FiltersProvider } from '../../context/FiltersProvider';
 import {products as initialState} from '../../mocks/products.json'
+import {AddItems, RemoveItems} from '../icons/Carts'
 
 export const Products = () => {
     const [products, setproducts] = useState(initialState);
 
-    const {filters, setFilters} = useContext(FiltersContext)
+    const {filters, setFilters} = useContext(FiltersContext);
+
+    const hasItemsToShop = true;
 
     const filterProducts = (products)=>{
         return products.filter(product =>{
@@ -28,6 +31,7 @@ export const Products = () => {
                             <img src={product.thumbnail} alt={product.title} />
                         </picture>
                         <h3>{product.title} - <strong>${product.price}</strong></h3>
+                        {hasItemsToShop?<AddItems/>:<RemoveItems/>}
                     </li>
                 )}
             </ul> : null

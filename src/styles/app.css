@@ -17,3 +17,42 @@
     gap:1rem;
     width: 100%;
 }
+
+.cart-container{
+    background-color: rgba(0, 0, 0, 0.162);
+    height: 100vh;
+    position: absolute;
+    top:0;
+    right:0;
+}
+.cart{
+    position: absolute;
+    left: 75vw;
+}
+
+
+/* .cart-icons-container{
+
+}
+ */
+.cart-item{
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.cart__checkbox{
+    display:none !important;
+    color:red;
+}
+
+.show-cart{
+    display:none;
+}
+
+.cart-button ~ input:checked ~ .show-cart{
+    display:block;
+    height: 100%;
+    width: 11rem;
+    background: rgba(1, 1, 1, 0.897);
+    position: relative;
+}
