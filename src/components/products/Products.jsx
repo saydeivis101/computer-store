@@ -1,14 +1,15 @@
 import React, { useContext, useState } from 'react'
-import { FiltersContext, FiltersProvider } from '../../context/FiltersProvider';
+import { FiltersContext } from '../../context/FiltersProvider';
 import {products as initialState} from '../../mocks/products.json'
 import {AddItems, RemoveItems} from '../icons/Carts'
+import { useCarts } from '../../hooks/useCarts';
 
 export const Products = () => {
     const [products, setproducts] = useState(initialState);
 
     const {filters, setFilters} = useContext(FiltersContext);
 
-    const hasItemsToShop = true;
+    const {cart, getQuantityInCart, addItemToCart, removeItemFromCart, removeAllTheItems } = useCarts()
 
     const filterProducts = (products)=>{
         return products.filter(product =>{
@@ -30,8 +31,11 @@ export const Products = () => {
                         <picture>
                             <img src={product.thumbnail} alt={product.title} />
                         </picture>
-                        <h3>{product.title} - <strong>${product.price}</strong></h3>
-                        {hasItemsToShop?<AddItems/>:<RemoveItems/>}
+                        <h3>{product.title} - Price: <strong>${product.price}</strong></h3>
+                        <h4>Quantity in Cart: <br/> {getQuantityInCart(product.id, cart)}</h4>
+                      <button onClick={()=>addItemToCart(product)}>
+                            <AddItems/>
+                      </button>
                     </li>
                 )}
             </ul> : null

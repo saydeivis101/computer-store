@@ -1,38 +1,46 @@
-import React, { useId } from 'react'
-import { AddItems } from '../icons/Carts'
-import '../../styles/app.css'
+import React, { useContext, useId } from "react";
+import { AddItems, RemoveItems } from "../icons/Carts";
+import "../../styles/app.css";
+import { CartsContext } from "../../context/CartsProvider";
 
 export const Cart = () => {
-
-  const cartCheckbox = useId()
+  const cartCheckbox = useId();
+  const { cart, removeItemFromCart } = useContext(CartsContext);
 
   return (
-   <div className="cart">
-     <label className='cart-button' htmlFor={cartCheckbox}>
-            <AddItems/>
-        </label>
-        <input className='cart__checkbox' type="checkbox" id={cartCheckbox} name="cartCheckbox" hidden />
-   
+    <div className="cart">
+      <label className="cart-button" htmlFor={cartCheckbox}>
+        <AddItems /> <span style={{color: cart.length ==0? "red": "green"}}>{cart.length}</span>
+      </label>
+      <input
+        className="cart__checkbox"
+        type="checkbox"
+        id={cartCheckbox}
+        name="cartCheckbox"
+        hidden
+      />
 
-        <div className="show-cart">
-           <ul>
-            <li>
+      <div className="show-cart">
+        <ul>
+          {cart.map((product) => (
+            <li key={product.id}>
               <picture>
-                <img src="https://i.dummyjson.com/data/products/21/thumbnail.png" alt="Title of the product" />
+                <img src={product.thumbnail} alt={product.title} />
               </picture>
-              <footer>
-                <h3>Title of the Product</h3>
-                <span>
-                  Qnty
-                </span>
-                <button>
-                  +1
-                </button>
-              </footer>
-            </li>
-           </ul>
-        </div>  
 
-   </div>
-  )
-}
+              <h3>{product.title}</h3>
+
+           <span>Price: <strong> ${product.price}</strong></span>
+            <br />
+          <span>Quantity: {product.quantity}</span>
+
+              <button onClick={()=>removeItemFromCart(product)}>
+                <RemoveItems />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
